@@ -12,7 +12,8 @@ class guaji(TriggerTask):
     def run(self):
         # self.trigger_count += 1
         # self.log_debug(f'MyTriggerTask run {self.trigger_count}')
-        if(self.ocr(0.47, 0.07, 0.53, 0.12, match=re.compile('85..'))):
+        # print(self.ocr(0.47, 0.07, 0.53, 0.12)[0].name)
+        if(self.ocr(0.47, 0.07, 0.53, 0.12, match=re.compile('8,5..'))):
             self.click_relative(0.50, 0.96)
             self.sleep(1.5)
             self.click_relative(0.50, 0.78)
@@ -20,7 +21,8 @@ class guaji(TriggerTask):
             self.click_relative(0.55, 0.81)
             self.sleep(1.5)
             self.click_relative(0.55, 0.56)
-            self.sleep(1.5)
+            self.sleep(10)
+            self.click_relative(0.50, 0.10)
 
 
 

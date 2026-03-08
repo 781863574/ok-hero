@@ -30,9 +30,9 @@ class washa(MyBaseTask):
         self.sleep(1)
         self.draw_boxes('washa_chuhuo')
         self.test_find_one_feature()
-        # while not (self.ocr(0.41,0.29,0.45,0.31,match='0/300')):
-        #     self.wa3ci()
-        #     self.genghuan()
+        while not (self.ocr(0.40,0.29,0.45,0.31,match='0/300')):
+            self.wa3ci()
+            self.genghuan()
         self.sleep(1)
         self.log_info('日常任务运行完成!', notify=True)
 
