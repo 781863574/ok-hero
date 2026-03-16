@@ -1,19 +1,29 @@
-import re
-from ok import TriggerTask
+import time
+from src.tasks.MyTriggerTask import MyTriggerTask
+from src.tasks.dailycheck import dailycheck
 
-class guaji(TriggerTask):
+class guaji(MyTriggerTask, dailycheck):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = "挂机"
         self.description = "挂机"
-        self.trigger_count = 0
+        self.relog_flag = False
+        self.isdaily_flag = False
 
     def run(self):
-        # self.trigger_count += 1
-        # self.log_debug(f'MyTriggerTask run {self.trigger_count}')
-        # print(self.ocr(0.47, 0.07, 0.53, 0.12)[0].name)
-        if(self.ocr(0.47, 0.07, 0.53, 0.12, match=re.compile('8,5..'))):
+        # self.isdaily()
+        try:
+            self.guaji()
+        except (ValueError, IndexError):
+            print('挂机: 未找到等级')
+        self.sleep(5)
+
+    def guaji(self):
+        self.error_detect()
+        level = self.ocr(0.47, 0.07, 0.53, 0.11)[0].name.replace(',', '').replace('.', '')
+        print(level)
+        if(int(level) > 10500):
             self.click_relative(0.50, 0.96)
             self.sleep(1.5)
             self.click_relative(0.50, 0.78)
@@ -25,5 +35,11 @@ class guaji(TriggerTask):
             self.click_relative(0.50, 0.10)
 
 
-
-
+    def isdaily(self):
+        if (self.relog_flag == False):
+            self.logout()
+            self.login()
+            self.relog_flag = True
+        if (self.isdaily_flag == False):
+            self.run_by_guaji()
+            self.isdaily_flag = True

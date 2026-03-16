@@ -83,9 +83,9 @@ config = {
         'min_height': 450,
     },
     'supported_resolution': {
-        'ratio': '16:9', #支持的游戏分辨率
+        # 'ratio': '16:9', #支持的游戏分辨率
         'min_size': (1280, 720), #支持的最低游戏分辨率
-        'resize_to': [(2560, 1440), (1920, 1080), (1600, 900), (1280, 720)], #可选, 如果非16:9自动缩放为 resize_to
+        # 'resize_to': [(2560, 1440), (1920, 1080), (1600, 900), (1280, 720)], #可选, 如果非16:9自动缩放为 resize_to
     },
     'links': { # 关于里显示的链接, 可选
             'default': {
@@ -107,9 +107,9 @@ config = {
     'version': version, #版本
     'my_app': ['src.globals', 'Globals'], #可选. 全局单例对象, 可以存放加载的模型, 使用og.my_app调用
     'onetime_tasks': [  # 用户点击触发的任务
-        ["src.tasks.washa", "washa"],
+        ["src.tasks.dailycheck", "dailycheck"],
+        ["src.tasks.tools", "tools"],
         ["src.tasks.pvp", "pvp"],
-        ["src.tasks.MyOneTimeTask", "MyOneTimeTask"],
         ["src.tasks.MyOneTimeWithAGroup", "MyOneTimeWithAGroup"],
         ["src.tasks.MyOneTimeWithAGroup2", "MyOneTimeWithAGroup2"],
         ["src.tasks.MyOneTimeWithBGroup", "MyOneTimeWithBGroup"],
