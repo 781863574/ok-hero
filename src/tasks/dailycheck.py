@@ -14,7 +14,7 @@ class dailycheck(MyTimesTask):
             '日常任务': "所有"
         })
         self.config_type["日常任务"] = {'type': "drop_down",
-                                      'options': ['所有', '魔石矿山', '第3']}
+                                      'options': ['所有', '魔石矿山', '挖沙']}
 
     def run(self):
         self.log_info('日常任务开始运行!', notify=True)
@@ -27,6 +27,8 @@ class dailycheck(MyTimesTask):
             self.ad_jiasu()
         elif self.config['日常任务'] == '魔石矿山':
             self.moshikuangshan()
+        elif self.config['日常任务'] == '挖沙':
+            self.washa()
         self.log_info('日常任务运行完成!', notify=True)
 
     def run_by_guaji(self):

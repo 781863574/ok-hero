@@ -23,7 +23,7 @@ class guaji(MyTriggerTask, dailycheck):
         self.error_detect()
         level = self.ocr(0.47, 0.07, 0.53, 0.11)[0].name.replace(',', '').replace('.', '')
         print(level)
-        if(int(level) > 10500):
+        if(int(level) > 12500):
             self.click_relative(0.50, 0.96)
             self.sleep(1.5)
             self.click_relative(0.50, 0.78)
