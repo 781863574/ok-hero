@@ -147,10 +147,32 @@ class MyTimesTask(MyBaseTask):
         click3 = [0.50, 0.64]
         click = [click1, click2, click3]
         for i in click:
-            if (self.find_one('washa_chuhuo')) or (self.find_one('washa_chudahuo')):
-                break
             self.click_relative(i[0], i[1])
-            self.sleep(1.5)
+            for j in range(10):
+                if (self.find_one('washa_chuhuo')):
+                    self.click_relative(0.60, 0.24)
+                    self.sleep(0.1)
+                    self.click_relative(0.60, 0.24)
+                    self.sleep(0.1)
+                    self.click_relative(0.55, 0.56)
+                    self.sleep(1.5)
+                    self.click_relative(0.50, 0.78)
+                    self.sleep(1.0)
+                    return None
+                elif (self.find_one('washa_chudahuo')):
+                    self.click_relative(0.45, 0.66)
+                    self.sleep(1.5)
+                    self.click_relative(0.50, 0.78)
+                    self.sleep(1.0)
+                    return None
+                else:
+                    self.sleep(0.1)
+        self.click_relative(0.60, 0.24)
+        self.sleep(0.1)
+        self.click_relative(0.55, 0.56)
+        self.sleep(1.5)
+        self.click_relative(0.50, 0.78)
+        self.sleep(1.0)
 
     def washa_huan(self):
         if (self.find_one('washa_chuhuo')):
@@ -174,16 +196,8 @@ class MyTimesTask(MyBaseTask):
         self.sleep(1.5)
 
     def washa(self):
-        while True:
-            if self.find_one('washa_zhuye'):
-                print("开始执行挖沙任务")
-                while not (self.find_one('washa_wanbi', threshold=0.9)):
-                    self.washa_wa()
-                    self.washa_huan()
-                print("挖沙任务完成")
-                break
-            else:
-                self.sleep(0.1)
+        box = [0.40, 0.28, 0.44, 0.305]
+        self.loop_check_ocr('not', box, '0/300', self.washa_wa)
 
     def taofa_ad(self):
         self.click_relative(0.46, 0.88)
@@ -248,7 +262,7 @@ class MyTimesTask(MyBaseTask):
         #     print(i)
         #     box[i] = fenzi[i]/fenmu[i]
         # print(box)
-        box = [0.51, 0.59, 0.54, 0.63]
+        box = [0.40, 0.28, 0.44, 0.305]
         ocr = self.ocr(box[0], box[1], box[2], box[3])
         str = ocr[0].name
         print(str)
