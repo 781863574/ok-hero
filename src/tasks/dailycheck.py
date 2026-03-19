@@ -14,10 +14,10 @@ class dailycheck(MyTimesTask):
             '日常任务': "所有"
         })
         self.config_type["日常任务"] = {'type': "drop_down",
-                                      'options': ['所有', '魔石矿山', '挖沙']}
+                                      'options': ['所有', 'pvp', '挖沙', 'ocr']}
 
     def run(self):
-        self.log_info('日常任务开始运行!', notify=True)
+        # self.log_info('日常任务开始运行!', notify=True)
         if self.config['日常任务'] == '所有':
             self.backtohome()
             self.enter('home_to_shijieditu')
@@ -25,11 +25,13 @@ class dailycheck(MyTimesTask):
             self.washa()
             self.taofa()
             self.ad_jiasu()
-        elif self.config['日常任务'] == '魔石矿山':
-            self.moshikuangshan()
+        elif self.config['日常任务'] == 'pvp':
+            self.pvp()
         elif self.config['日常任务'] == '挖沙':
             self.washa()
-        self.log_info('日常任务运行完成!', notify=True)
+        elif self.config['日常任务'] == 'ocr':
+            self.ocr_test()
+        # self.log_info('日常任务运行完成!', notify=True)
 
     def run_by_guaji(self):
             self.backtohome()

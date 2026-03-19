@@ -1,13 +1,88 @@
 from src.tasks.MyBaseTask import MyBaseTask
+import json
+import time
+import os
 
 class MyTimesTask(MyBaseTask):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.pvp_buyticket_flag = False
         self.taofa_ad_flag = False
+        self.today = time.strftime("%Y%m%d")
+        self.today_log = f"logs/log_{self.today}.json"
+        if not os.path.exists(self.today_log):
+            self.log ={
+                "pvp_buyticket_flag" : False,
+            }
+            with open(self.today_log, "w") as f:
+                json.dump(self.log, f)
+        else:
+            with open(self.today_log, "r") as f:
+                self.log = json.load(f)
+    
+    # 装饰器函数
+    # def loop_check_one(is_f, feature):
+    #     def loop_check(func):
+    #         def wrapper(self, *args, **kwargs):
+    #             while True:
+    #                 if is_f == 'is':
+    #                     if self.find_one(feature):
+    #                         return func(self, *args, **kwargs)
+    #                     else:
+    #                         self.sleep(0.1)
+    #                 elif is_f == 'not':
+    #                     if self.find_one(feature):
+    #                         break
+    #                     else:
+    #                         return func(self, *args, **kwargs)
+    #         return wrapper
+    #     return loop_check
+
+    def loop_check_one(self, is_not, feature, func):
+        if is_not == 'is':
+            while True:
+                if self.find_one(feature):
+                    self.sleep(1)
+                    func()
+                    break
+                else:
+                    self.sleep(0.5)
+        elif is_not == 'not':
+            while True:
+                if self.find_one(feature):
+                    break
+                else:
+                    func()
+
+    def loop_check_ocr(self, is_not, box, ocr_str, func):
+        if is_not == 'is':
+            while True:
+                if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
+                    self.sleep(1)
+                    func()
+                    break
+                else:
+                    pass
+                self.sleep(0.5)
+        elif is_not == 'not':
+            while True:
+                if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
+                    break
+                else:
+                    func()
+                self.sleep(0.5)
+
+    def loop_ocr(self, box, func):
+        while True:
+            lv = self.ocr(box[0], box[1], box[2], box[3])
+            if lv:
+                func()
+                return lv
+            else:
+                pass
+            self.sleep(0.5)
 
     def pvp_buyticket(self):
-        if self.pvp_buyticket_flag == False:
+        if self.log["pvp_buyticket_flag"] == False:
             for i in range(10):
                 self.click_relative(0.54,0.61)
                 self.sleep(0.1)
@@ -15,7 +90,9 @@ class MyTimesTask(MyBaseTask):
                 self.sleep(1)
                 self.click_relative(0.50,0.10)
                 self.sleep(0.1)
-            self.pvp_buyticket_flag = True
+            self.log["pvp_buyticket_flag"] = True
+            with open(self.today_log, "w") as f:
+                json.dump(self.log, f)
 
     def pvp_checklv(self):
         lv = self.ocr(0.46,0.39,0.50,0.41)[0].name.replace(',','').replace('Lv.','').replace('？','0')
@@ -29,8 +106,9 @@ class MyTimesTask(MyBaseTask):
         lv = []
         for i in click:
             self.click_relative(i[0], i[1])
-            self.wait_feature('pvp_Lv')
-            lv.append(self.pvp_checklv())
+            box = []
+            level = self.loop_ocr(box, self.pvp_checklv)
+            lv.append(level)
             self.back()
             self.sleep(0.1)
         min_value = min(lv)
@@ -58,17 +136,10 @@ class MyTimesTask(MyBaseTask):
         self.sleep(0.5)
 
     def pvp(self):
-        # if not (self.find_one('ispvp', threshold=0.99)):
-            # 进入pvp界面
-            self.enter('shijieditu_to_pvp')
-            # 购买pvp门票
-            self.pvp_buyticket()
-            # 开始执行pvp任务
-            while not (self.find_one('pvp_wanbi',threshold=0.99)):
-                self.pvp_complete()
-            self.back()
-            self.wait_feature('shijieditu')
-            self.sleep(0.8)
+        self.loop_check_one('is', 'pvp_zhuye', self.pvp_buyticket)
+        box = [0.51, 0.59, 0.54, 0.63]
+        self.loop_check_ocr('not', box, '0/5', self.pvp_complete)
+
 
     def washa_wa(self):
         click1 = [0.57, 0.70]
@@ -103,16 +174,16 @@ class MyTimesTask(MyBaseTask):
         self.sleep(1.5)
 
     def washa(self):
-        if not (self.find_one('iswasha', threshold=0.99)):
-            # 进入星之海岸
-            self.enter('shijieditu_to_washa')
-            # 开始执行挖沙
-            while not (self.find_one('washa_wanbi', threshold=0.99)):
-                self.washa_wa()
-                self.washa_huan()
-            self.back()
-            self.wait_feature('shijieditu')
-            self.sleep(0.8)
+        while True:
+            if self.find_one('washa_zhuye'):
+                print("开始执行挖沙任务")
+                while not (self.find_one('washa_wanbi', threshold=0.9)):
+                    self.washa_wa()
+                    self.washa_huan()
+                print("挖沙任务完成")
+                break
+            else:
+                self.sleep(0.1)
 
     def taofa_ad(self):
         self.click_relative(0.46, 0.88)
@@ -168,4 +239,18 @@ class MyTimesTask(MyBaseTask):
             self.click_relative(i[0], i[1])
             self.sleep(0.5)
             self.ad_bonus_isfull()
+
+    def ocr_test(self):
+        # fenzi = [1237,830,1330,880]
+        # fenmu = [2432,1408,2432,1408]
+        # box = [0,0,0,0]
+        # for i in range(4):
+        #     print(i)
+        #     box[i] = fenzi[i]/fenmu[i]
+        # print(box)
+        box = [0.51, 0.59, 0.54, 0.63]
+        ocr = self.ocr(box[0], box[1], box[2], box[3])
+        str = ocr[0].name
+        print(str)
+        self.log_info('ocr识别信息: ' + str, notify=True)
         
