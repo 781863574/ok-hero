@@ -173,6 +173,12 @@
             "height": 1321,
             "id": 28,
             "file_name": "images/28.png"
+        },
+        {
+            "width": 2279,
+            "height": 1321,
+            "id": 29,
+            "file_name": "images/29.png"
         }
     ],
     "categories": [
@@ -230,70 +236,74 @@
         },
         {
             "id": 13,
-            "name": "pvp_shengli"
+            "name": "pvp_confirm"
         },
         {
             "id": 14,
-            "name": "pvp_wanbi"
+            "name": "pvp_shengli"
         },
         {
             "id": 15,
-            "name": "pvp_zhuye"
+            "name": "pvp_wanbi"
         },
         {
             "id": 16,
-            "name": "shijieditu"
+            "name": "pvp_zhuye"
         },
         {
             "id": 17,
-            "name": "taofa_zhuye"
+            "name": "shijieditu"
         },
         {
             "id": 18,
-            "name": "tiankongzhita"
+            "name": "taofa_zhuye"
         },
         {
             "id": 19,
-            "name": "tiankongzhita_shengli"
+            "name": "tiankongzhita"
         },
         {
             "id": 20,
-            "name": "wakuang_zhuye"
+            "name": "tiankongzhita_shengli"
         },
         {
             "id": 21,
-            "name": "washa_chu1"
+            "name": "wakuang_zhuye"
         },
         {
             "id": 22,
-            "name": "washa_chu3"
+            "name": "washa_chu1"
         },
         {
             "id": 23,
-            "name": "washa_wanbi"
+            "name": "washa_chu3"
         },
         {
             "id": 24,
-            "name": "washa_zhuye"
+            "name": "washa_wanbi"
         },
         {
             "id": 25,
-            "name": "wulin_jieshu"
+            "name": "washa_zhuye"
         },
         {
             "id": 26,
-            "name": "wulin_zhuye"
+            "name": "wulin_jieshu"
         },
         {
             "id": 27,
-            "name": "yuansuyundao_feng"
+            "name": "wulin_zhuye"
         },
         {
             "id": 28,
-            "name": "zhaohuan_over"
+            "name": "yuansuyundao_feng"
         },
         {
             "id": 29,
+            "name": "zhaohuan_over"
+        },
+        {
+            "id": 30,
             "name": "zhuanpan_over"
         }
     ],
@@ -301,7 +311,7 @@
         {
             "id": 0,
             "image_id": 0,
-            "category_id": 24,
+            "category_id": 25,
             "segmentation": [],
             "bbox": [
                 778.8625812441963,
@@ -316,7 +326,7 @@
         {
             "id": 1,
             "image_id": 1,
-            "category_id": 23,
+            "category_id": 24,
             "segmentation": [],
             "bbox": [
                 843.6009055418341,
@@ -331,7 +341,7 @@
         {
             "id": 2,
             "image_id": 2,
-            "category_id": 13,
+            "category_id": 14,
             "segmentation": [],
             "bbox": [
                 1056.064066852368,
@@ -361,7 +371,7 @@
         {
             "id": 4,
             "image_id": 4,
-            "category_id": 14,
+            "category_id": 15,
             "segmentation": [],
             "bbox": [
                 1027.887211252948,
@@ -391,7 +401,7 @@
         {
             "id": 6,
             "image_id": 6,
-            "category_id": 16,
+            "category_id": 17,
             "segmentation": [],
             "bbox": [
                 901.5181058495821,
@@ -406,7 +416,7 @@
         {
             "id": 7,
             "image_id": 7,
-            "category_id": 20,
+            "category_id": 21,
             "segmentation": [],
             "bbox": [
                 1078.1420612813376,
@@ -421,7 +431,7 @@
         {
             "id": 8,
             "image_id": 8,
-            "category_id": 26,
+            "category_id": 27,
             "segmentation": [],
             "bbox": [
                 1081.821727019498,
@@ -436,7 +446,7 @@
         {
             "id": 9,
             "image_id": 9,
-            "category_id": 25,
+            "category_id": 26,
             "segmentation": [],
             "bbox": [
                 1072.009285051068,
@@ -451,7 +461,7 @@
         {
             "id": 10,
             "image_id": 10,
-            "category_id": 15,
+            "category_id": 16,
             "segmentation": [],
             "bbox": [
                 1095.3138347260904,
@@ -466,7 +476,7 @@
         {
             "id": 11,
             "image_id": 11,
-            "category_id": 27,
+            "category_id": 28,
             "segmentation": [],
             "bbox": [
                 1063.4233983286908,
@@ -481,7 +491,7 @@
         {
             "id": 12,
             "image_id": 12,
-            "category_id": 18,
+            "category_id": 19,
             "segmentation": [],
             "bbox": [
                 901.5181058495817,
@@ -496,7 +506,7 @@
         {
             "id": 13,
             "image_id": 13,
-            "category_id": 19,
+            "category_id": 20,
             "segmentation": [],
             "bbox": [
                 1068.3296193129058,
@@ -556,7 +566,7 @@
         {
             "id": 17,
             "image_id": 17,
-            "category_id": 17,
+            "category_id": 18,
             "segmentation": [],
             "bbox": [
                 901.2354882345701,
@@ -616,7 +626,7 @@
         {
             "id": 21,
             "image_id": 21,
-            "category_id": 29,
+            "category_id": 30,
             "segmentation": [],
             "bbox": [
                 1195.2632611139722,
@@ -631,7 +641,7 @@
         {
             "id": 22,
             "image_id": 22,
-            "category_id": 28,
+            "category_id": 29,
             "segmentation": [],
             "bbox": [
                 856.2445242655373,
@@ -721,7 +731,7 @@
         {
             "id": 28,
             "image_id": 27,
-            "category_id": 21,
+            "category_id": 22,
             "segmentation": [],
             "bbox": [
                 1200.0332109372273,
@@ -736,7 +746,7 @@
         {
             "id": 29,
             "image_id": 28,
-            "category_id": 22,
+            "category_id": 23,
             "segmentation": [],
             "bbox": [
                 1364.47639247712,
@@ -747,6 +757,21 @@
             "ignore": 0,
             "iscrowd": 0,
             "area": 4255.921370762607
+        },
+        {
+            "id": 30,
+            "image_id": 29,
+            "category_id": 13,
+            "segmentation": [],
+            "bbox": [
+                900.2915506035265,
+                1116.1652739090068,
+                175.39740018569972,
+                61.32776230269244
+            ],
+            "ignore": 0,
+            "iscrowd": 0,
+            "area": 10756.730067098815
         }
     ],
     "info": {
@@ -755,6 +780,6 @@
         "description": "",
         "contributor": "Label Studio",
         "url": "",
-        "date_created": "2026-03-22 14:28:17.397606"
+        "date_created": "2026-03-29 21:49:46.643104"
     }
 }

@@ -57,19 +57,18 @@ class MyTimesTask(MyBaseTask):
         if is_not == 'is':
             while True:
                 if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
-                    self.sleep(1)
                     func()
                     break
                 else:
                     pass
-                self.sleep(0.5)
+                self.sleep(0.1)
         elif is_not == 'not':
             while True:
                 if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
                     break
                 else:
                     func()
-                self.sleep(0.5)
+                self.sleep(0.1)
 
     def loop_ocr(self, box, func):
         while True:
@@ -98,6 +97,10 @@ class MyTimesTask(MyBaseTask):
         lv = self.ocr(0.46,0.388,0.505,0.412)[0].name.replace('Lv','').replace('.','').replace(',','').replace('？','0').replace('?','0')
         return lv
 
+    def pvp_confirm(self):
+        self.click_relative(0.43,0.87)
+        self.sleep(0.5)
+
     def pvp_complete(self):
         click1 = [0.41, 0.73]
         click2 = [0.50, 0.73]
@@ -105,40 +108,25 @@ class MyTimesTask(MyBaseTask):
         click = [click1, click2, click3]
         lv = []
         for i in click:
-            self.click_relative(i[0], i[1])
-            self.sleep(0.8)
-            level = self.pvp_checklv()
-            # if int(level) < 1000:
-            #     self.click_relative(0.55,0.73)
-            #     return None
-            lv.append(int(level))
-            self.back()
-            self.sleep(0.1)
-        min_value = min(lv, key=int)
-        min_index = lv.index(min_value)
+            if i != click3:
+                self.click_relative(i[0], i[1])
+                self.sleep(0.5)
+                level = self.pvp_checklv()
+                lv.append(int(level))
+                if int(level) < 2000:
+                    self.click_relative(0.55,0.73)
+                    # self.loop_check_one('is', 'pvp_confirm', self.pvp_confirm)
+                    box = [0.415, 0.85, 0.45, 0.885]
+                    self.loop_check_ocr('is', box, '确认', self.pvp_confirm)
+                    break
+                self.back()
+            else:
+                self.click_relative(0.59,0.86)
+                # self.loop_check_one('is', 'pvp_confirm', self.pvp_confirm)
+                box = [0.415, 0.85, 0.45, 0.885]
+                self.loop_check_ocr('is', box, '确认', self.pvp_confirm)
         with open('logs/pvp.log',  "a") as f:
-            f.write(str(lv) + '\t' + str(min_value) + '\t' + str(min_index) + '\n')
-        self.sleep(0.5)
-        if min_index == 0:
-            self.click_relative(0.41,0.86)
-        elif min_index == 1:
-            self.click_relative(0.50,0.86)
-        elif min_index == 2:
-            self.click_relative(0.59,0.86)
-        # 同时等待胜利或失败特征，使用循环检查
-        import time
-        start_time = time.time()
-        timeout = 30  # 30秒超时
-        
-        while time.time() - start_time < timeout:
-            if self.find_one('pvp_shengli') or self.find_one('pvp_baibei'):
-                break
-            self.sleep(0.1)  # 每0.1秒检查一次
-        
-        if time.time() - start_time >= timeout:
-            self.log_warning('等待胜利或失败特征超时', log=True)
-        self.click_relative(0.50,0.86)
-        self.sleep(0.5)
+            f.write(str(lv) + '\t' + 'pvp_complete' + '\n')
 
     def pvp(self):
         self.loop_check_one('is', 'pvp_zhuye', self.pvp_buyticket)
@@ -247,7 +235,7 @@ class MyTimesTask(MyBaseTask):
         #     print(i)
         #     box[i] = fenzi[i]/fenmu[i]
         # print(box)
-        box = [0.50, 0.59, 0.538, 0.63]
+        box = [0.415, 0.85, 0.45, 0.885]
         ocr = self.ocr(box[0], box[1], box[2], box[3])
         str = ocr[0].name
         print(str)

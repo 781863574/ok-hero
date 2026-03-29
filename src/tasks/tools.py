@@ -32,7 +32,7 @@ class tools(BaseTask):
     def auto_equip(self):
         for i in range(125):
             self.click_relative(0.62, 0.27)
-            self.sleep(0.1)
+            self.sleep(0.2)
             while (self.find_one('auto_equip')):
                 self.click_relative(0.63, 0.51)
                 self.sleep(0.1)
