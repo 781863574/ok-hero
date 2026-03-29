@@ -30,6 +30,9 @@ class guaji(MyTriggerTask, dailycheck):
             self.sleep(1.5)
             self.click_relative(0.50, 0.78)
             self.sleep(1.5)
+            # 2x
+            self.click_relative(0.55, 0.65)
+            self.sleep(1.5)
             self.click_relative(0.55, 0.81)
             self.sleep(1.5)
             self.click_relative(0.55, 0.56)
@@ -38,6 +41,7 @@ class guaji(MyTriggerTask, dailycheck):
             now = time.strftime("%m%d-%H:%M")
             with open('logs/guaji.log',  "a") as f:
                 f.write(str(level_tmp) + '\t' + str(self.level) + '\t' + str(now) + '\n')
+            self.level = 0
 
 
     def isdaily(self):
