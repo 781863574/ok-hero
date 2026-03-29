@@ -95,7 +95,7 @@ class MyTimesTask(MyBaseTask):
                 json.dump(self.log, f)
 
     def pvp_checklv(self):
-        lv = self.ocr(0.46,0.39,0.50,0.41)[0].name.replace(',','').replace('Lv.','').replace('？','0')
+        lv = self.ocr(0.46,0.388,0.505,0.412)[0].name.replace('Lv','').replace('.','').replace(',','').replace('？','0').replace('?','0')
         return lv
 
     def pvp_complete(self):
@@ -106,13 +106,18 @@ class MyTimesTask(MyBaseTask):
         lv = []
         for i in click:
             self.click_relative(i[0], i[1])
-            box = []
-            level = self.loop_ocr(box, self.pvp_checklv)
-            lv.append(level)
+            self.sleep(0.8)
+            level = self.pvp_checklv()
+            # if int(level) < 1000:
+            #     self.click_relative(0.55,0.73)
+            #     return None
+            lv.append(int(level))
             self.back()
             self.sleep(0.1)
-        min_value = min(lv)
+        min_value = min(lv, key=int)
         min_index = lv.index(min_value)
+        with open('logs/pvp.log',  "a") as f:
+            f.write(str(lv) + '\t' + str(min_value) + '\t' + str(min_index) + '\n')
         self.sleep(0.5)
         if min_index == 0:
             self.click_relative(0.41,0.86)
@@ -137,7 +142,7 @@ class MyTimesTask(MyBaseTask):
 
     def pvp(self):
         self.loop_check_one('is', 'pvp_zhuye', self.pvp_buyticket)
-        box = [0.51, 0.59, 0.54, 0.63]
+        box = [0.50, 0.59, 0.538, 0.63]
         self.loop_check_ocr('not', box, '0/5', self.pvp_complete)
 
 
@@ -148,52 +153,32 @@ class MyTimesTask(MyBaseTask):
         click = [click1, click2, click3]
         for i in click:
             self.click_relative(i[0], i[1])
-            for j in range(10):
-                if (self.find_one('washa_chuhuo')):
-                    self.click_relative(0.60, 0.24)
-                    self.sleep(0.1)
-                    self.click_relative(0.60, 0.24)
-                    self.sleep(0.1)
-                    self.click_relative(0.55, 0.56)
-                    self.sleep(1.5)
-                    self.click_relative(0.50, 0.78)
-                    self.sleep(1.0)
-                    return None
-                elif (self.find_one('washa_chudahuo')):
-                    self.click_relative(0.45, 0.66)
-                    self.sleep(1.5)
-                    self.click_relative(0.50, 0.78)
-                    self.sleep(1.0)
-                    return None
-                else:
-                    self.sleep(0.1)
+            self.sleep(0.2)
+            if (self.find_one('washa_chu1')) and not self.find_one('washa_chu3'):
+                self.sleep(1)
+                self.click_relative(0.60, 0.24)
+                self.sleep(0.1)
+                self.click_relative(0.60, 0.24)
+                self.sleep(0.1)
+                self.click_relative(0.55, 0.56)
+                self.sleep(1.5)
+                self.click_relative(0.50, 0.78)
+                self.sleep(1.0)
+                return None
+            elif (self.find_one('washa_chu3')):
+                self.sleep(2.5)
+                self.click_relative(0.45, 0.66)
+                self.sleep(1.5)
+                self.click_relative(0.50, 0.78)
+                self.sleep(1.0)
+                return None
+        self.sleep(0.2)
         self.click_relative(0.60, 0.24)
         self.sleep(0.1)
         self.click_relative(0.55, 0.56)
         self.sleep(1.5)
         self.click_relative(0.50, 0.78)
         self.sleep(1.0)
-
-    def washa_huan(self):
-        if (self.find_one('washa_chuhuo')):
-            self.click_relative(0.60, 0.24)
-            self.sleep(0.1)
-            self.click_relative(0.60, 0.24)
-            self.sleep(0.1)
-            self.click_relative(0.55, 0.56)
-            self.sleep(1.5)
-            self.click_relative(0.50, 0.78)
-        elif (self.find_one('washa_chudahuo')):
-            self.click_relative(0.45, 0.66)
-            self.sleep(1.5)
-            self.click_relative(0.50, 0.78)
-        elif (self.find_one('washa_zhuye')):
-            self.click_relative(0.60, 0.24)
-            self.sleep(0.1)
-            self.click_relative(0.55, 0.56)
-            self.sleep(1.5)
-            self.click_relative(0.50, 0.78)
-        self.sleep(1.5)
 
     def washa(self):
         box = [0.40, 0.28, 0.44, 0.305]
@@ -262,7 +247,7 @@ class MyTimesTask(MyBaseTask):
         #     print(i)
         #     box[i] = fenzi[i]/fenmu[i]
         # print(box)
-        box = [0.40, 0.28, 0.44, 0.305]
+        box = [0.50, 0.59, 0.538, 0.63]
         ocr = self.ocr(box[0], box[1], box[2], box[3])
         str = ocr[0].name
         print(str)

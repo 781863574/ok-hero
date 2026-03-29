@@ -11,20 +11,22 @@ class tools(BaseTask):
         self.description = "杂项任务"
         self.icon = FluentIcon.SYNC
         self.default_config.update({
-            '下拉菜单选项': "第一",
+            '自动工具': "自动装备",
             '是否选项默认支持': False,
             'int选项': 1,
             '文字框选项': "默认文字",
             '长文字框选项': "默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字",
             'list选项': ['第一', '第二', '第3'],
         })
-        self.config_type["下拉菜单选项"] = {'type': "drop_down",
-                                      'options': ['第一', '第二', '第3']}
+        self.config_type["自动工具"] = {'type': "drop_down",
+                                      'options': ['自动装备', '自动BOSS']}
 
     def run(self):
         self.sleep(1)
-        self.auto_equip()
-        # self.auto_boss()
+        if self.config['自动工具'] == '自动装备':
+            self.auto_equip()
+        elif self.config['自动工具'] == '自动BOSS':
+            self.auto_boss()
         self.sleep(1)
 
     def auto_equip(self):
