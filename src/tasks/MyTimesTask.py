@@ -151,14 +151,14 @@ class MyTimesTask(MyBaseTask):
                 self.click_relative(0.55, 0.56)
                 self.sleep(1.5)
                 self.click_relative(0.50, 0.78)
-                self.sleep(1.0)
+                self.sleep(1.2)
                 return None
             elif (self.find_one('washa_chu3')):
                 self.sleep(2.5)
                 self.click_relative(0.45, 0.66)
                 self.sleep(1.5)
                 self.click_relative(0.50, 0.78)
-                self.sleep(1.0)
+                self.sleep(1.2)
                 return None
         self.sleep(0.2)
         self.click_relative(0.60, 0.24)
@@ -166,7 +166,7 @@ class MyTimesTask(MyBaseTask):
         self.click_relative(0.55, 0.56)
         self.sleep(1.5)
         self.click_relative(0.50, 0.78)
-        self.sleep(1.0)
+        self.sleep(1.2)
 
     def washa(self):
         box = [0.40, 0.28, 0.44, 0.305]
