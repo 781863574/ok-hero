@@ -30,8 +30,8 @@ class guaji(MyTriggerTask, dailycheck):
             self.sleep(1.5)
             self.click_relative(0.50, 0.78)
             self.sleep(1.5)
-            # 2x
-            self.click_relative(0.55, 0.65)
+            # 2x：0.50 4x：0.55
+            self.click_relative(0.50, 0.65)
             self.sleep(1.5)
             self.click_relative(0.55, 0.81)
             self.sleep(1.5)

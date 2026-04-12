@@ -36,6 +36,32 @@ class MyBaseTask(BaseTask):
                 self.sleep(1)  # 每0.1秒检查一次
         self.sleep(0.8)
 
+    def loop_ocr_click(self, box, ocr_str, click):
+        while True:
+            if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
+                self.click_relative(click[0], click[1])
+                break
+            else:
+                pass
+            self.sleep(0.1)
+
+    def loop_check_ocr(self, is_not, box, ocr_str, func):
+        if is_not == 'is':
+            while True:
+                if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
+                    func()
+                    break
+                else:
+                    pass
+                self.sleep(0.1)
+        elif is_not == 'not':
+            while True:
+                if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
+                    break
+                else:
+                    func()
+                self.sleep(0.1)
+
     def moshikuangshan(self):
         self.click_relative(0.62,0.53)
         self.wait_feature('shijieditu')

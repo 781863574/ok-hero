@@ -1,9 +1,9 @@
 from qfluentwidgets import FluentIcon
 
-from ok import BaseTask
+from src.tasks.MyBaseTask import MyBaseTask
 
 
-class tools(BaseTask):
+class tools(MyBaseTask):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -12,14 +12,9 @@ class tools(BaseTask):
         self.icon = FluentIcon.SYNC
         self.default_config.update({
             '自动工具': "自动装备",
-            '是否选项默认支持': False,
-            'int选项': 1,
-            '文字框选项': "默认文字",
-            '长文字框选项': "默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字默认文字",
-            'list选项': ['第一', '第二', '第3'],
         })
         self.config_type["自动工具"] = {'type': "drop_down",
-                                      'options': ['自动装备', '自动BOSS']}
+                                      'options': ['自动装备', '自动BOSS', '自动炼金', 'ocr测试']}
 
     def run(self):
         self.sleep(1)
@@ -27,6 +22,10 @@ class tools(BaseTask):
             self.auto_equip()
         elif self.config['自动工具'] == '自动BOSS':
             self.auto_boss()
+        elif self.config['自动工具'] == '自动炼金':
+            self.auto_lianjin()
+        elif self.config['自动工具'] == 'ocr测试':
+            self.ocr_test()
         self.sleep(1)
 
     def auto_equip(self):
@@ -46,5 +45,25 @@ class tools(BaseTask):
             self.wait_feature('home')
             self.sleep(1)
 
+    def auto_lianjin(self):
+        for i in range(100):
+            box1 = [0.60, 0.966, 0.63, 0.99]
+            click1 = [0.61,0.95]
+            self.loop_ocr_click(box1, '刷新', click1)
+            self.sleep(0.5)
+            self.click_relative(0.56, 0.60)
+            self.sleep(0.5)
+            self.click_relative(0.61, 0.56)
+            self.sleep(0.5)
+            self.click_relative(0.50, 0.96)
+            self.sleep(0.5)
+            self.wait_click_ocr(0.48, 0.89, 0.52, 0.924, match='确认')
+            self.sleep(0.8)
 
+    def ocr_test(self):
+        box = [0.60, 0.966, 0.63, 0.99]
+        ocr = self.ocr(box[0], box[1], box[2], box[3])
+        str = ocr[0].name
+        print(str)
+        self.log_info('ocr识别信息: ' + str, notify=True)
 

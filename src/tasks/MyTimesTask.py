@@ -7,17 +7,6 @@ class MyTimesTask(MyBaseTask):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.taofa_ad_flag = False
-        self.today = time.strftime("%Y%m%d")
-        self.today_log = f"logs/log_{self.today}.json"
-        if not os.path.exists(self.today_log):
-            self.log ={
-                "pvp_buyticket_flag" : False,
-            }
-            with open(self.today_log, "w") as f:
-                json.dump(self.log, f)
-        else:
-            with open(self.today_log, "r") as f:
-                self.log = json.load(f)
     
     # 装饰器函数
     # def loop_check_one(is_f, feature):
@@ -53,23 +42,6 @@ class MyTimesTask(MyBaseTask):
                 else:
                     func()
 
-    def loop_check_ocr(self, is_not, box, ocr_str, func):
-        if is_not == 'is':
-            while True:
-                if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
-                    func()
-                    break
-                else:
-                    pass
-                self.sleep(0.1)
-        elif is_not == 'not':
-            while True:
-                if self.ocr(box[0], box[1], box[2], box[3], match=ocr_str):
-                    break
-                else:
-                    func()
-                self.sleep(0.1)
-
     def loop_ocr(self, box, func):
         while True:
             lv = self.ocr(box[0], box[1], box[2], box[3])
@@ -81,6 +53,17 @@ class MyTimesTask(MyBaseTask):
             self.sleep(0.5)
 
     def pvp_buyticket(self):
+        self.today = time.strftime("%Y%m%d")
+        self.today_log = f"logs/log_{self.today}.json"
+        if not os.path.exists(self.today_log):
+            self.log ={
+                "pvp_buyticket_flag" : False,
+            }
+            with open(self.today_log, "w") as f:
+                json.dump(self.log, f)
+        else:
+            with open(self.today_log, "r") as f:
+                self.log = json.load(f)
         if self.log["pvp_buyticket_flag"] == False:
             for i in range(10):
                 self.click_relative(0.54,0.61)
