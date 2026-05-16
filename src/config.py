@@ -77,7 +77,7 @@ config = {
     },
     'adb': {  # Windows游戏请填写此设置, mumu模拟器使用原生截图和input,速度极快. 其他模拟器和真机使用adb,截图速度较慢
         # optional, if set, will start the pacakge and ensure installed
-        #'packages': ['com.abc.efg1', 'com.abc.efg1']
+        'packages': ['com.ftqst.tap']
     },
     'start_timeout': 120,  # default 60
     'window_size': { #ok-script窗口大小
@@ -87,9 +87,9 @@ config = {
         'min_height': 450,
     },
     'supported_resolution': {
-        'ratio': '16:9', #支持的游戏分辨率
-        'min_size': (1280, 720), #支持的最低游戏分辨率
-        'resize_to': [(2560, 1440), (1920, 1080), (1600, 900), (1280, 720)], #可选, 如果非16:9自动缩放为 resize_to
+        # 'ratio': '16:9', #支持的游戏分辨率
+        # 'min_size': (1280, 720), #支持的最低游戏分辨率
+        # 'resize_to': [(2560, 1440), (1920, 1080), (1600, 900), (1280, 720)], #可选, 如果非16:9自动缩放为 resize_to
     },
     'links': { # 关于里显示的链接, 可选
             'default': {
@@ -112,6 +112,7 @@ config = {
     'version': version, #版本
     'my_app': ['src.globals', 'Globals'], #可选. 全局单例对象, 可以存放加载的模型, 使用og.my_app调用
     'onetime_tasks': [  # 用户点击触发的任务
+        ["ok_tasks.DailyTaskBase", "DailyTaskBase"],
         ["src.tasks.MyOneTimeTask", "MyOneTimeTask"],
         ["ok", "DiagnosisTask"],
     ],
